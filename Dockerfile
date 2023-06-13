@@ -1,15 +1,13 @@
-FROM node:16.4.0
+FROM node:16-alpine
 
-RUN apk add --no-cache nano
+WORKDIR /usr/src/app
 
-WORKDIR /app
+COPY package*.json ./
+
+RUN yarn install
 
 COPY . .
 
-RUN yarn install --production
-
 RUN yarn build
 
-EXPOSE 8080
-
-CMD [ "yarn", "preview" ]
+CMD [ "yarn", "start" ]
